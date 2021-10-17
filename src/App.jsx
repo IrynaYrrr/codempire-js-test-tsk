@@ -10,8 +10,10 @@ import TableContainer from '@mui/material/TableContainer';
 import * as React from 'react';
 import useLoadCountries from './hooks/useLoadCountries';
 import SearchInput from './components/SearchInput';
+import CountryModal from './components/CountryModal';
+import CountryItem from './components/CountryItem';
 
-function App() {
+const App =()=> {
     const [countries, loading, error] = useLoadCountries();
     const [searchValue, setSearchValue] = useState('');
 
@@ -26,33 +28,15 @@ function App() {
         return (
             <div>
                 <SearchInput value={searchValue} setValue={setSearchValue} />
-                <TableContainer component={Paper}>
-                    <Table sx={{ minWidth: 650 }} aria-label="simple table">
-                        <TableHead>
-                            <TableRow>
-                                <TableCell>№</TableCell>
-                                <TableCell>Country</TableCell>
-                                <TableCell>Total Confirmed</TableCell>
-                            </TableRow>
-                        </TableHead>
-                        <TableBody>
-                            {countries.filter(searchFilter).map((items) => (
-                                <TableRow
-                                    key={items.ID}
-                                    sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                                >
-                                    <TableCell component="th" scope="row">
-                                        {items.Number}
-                                    </TableCell>
-                                    <TableCell component="th" scope="row">
-                                        {items.Country}
-                                    </TableCell>
-                                    <TableCell align="right">{items.TotalConfirmed}</TableCell>
-                                </TableRow>
-                            ))}
-                        </TableBody>
-                    </Table>
-                </TableContainer>
+
+                <div className="main">
+                    <div className="flex">№</div>
+                    <div className="flex">Country</div>
+                    <div className="flex">Total Confirmed</div>
+                </div>
+                {countries.filter(searchFilter).map((country) => (
+                   <CountryItem key={country.ID} country={country} />
+                ))}
             </div>
         );
     }
