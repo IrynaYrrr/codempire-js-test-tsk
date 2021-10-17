@@ -8,77 +8,54 @@ import TableCell from '@mui/material/TableCell';
 import TableBody from '@mui/material/TableBody';
 import TableContainer from '@mui/material/TableContainer';
 import * as React from 'react';
+import useLoadCountries from './hooks/useLoadCountries';
+import SearchInput from './components/SearchInput';
 
-function MyComponent() {
-    const [error, setError] = useState(null);
-    const [isLoaded, setIsLoaded] = useState(false);
-    const [items, setItems] = useState([]);
+function App() {
+    const [countries, loading, error] = useLoadCountries();
+    const [searchValue, setSearchValue] = useState('');
 
-    useEffect(() => {
-        fetch('https://api.covid19api.com/summary')
-            .then(res => res.json())
-            .then(
-                (result) => {
-                    setIsLoaded(true);
-                    console.log(result)
-                    const countries = result.Countries;
-
-                    for (let i = 0; i < countries.length;i++) {
-                        countries[i].Number = i + 1;
-                    }
-
-                    setItems(countries);
-                }
-            )
-            .catch((error) => {
-                setIsLoaded(true);
-                setError(error);
-            })
-    }, [])
+    const searchFilter = (c) =>
+        c.Country.toUpperCase().indexOf(searchValue.toUpperCase()) === 0;
 
     if (error) {
         return <div>Ошибка: {error.message}</div>;
-    } else if (!isLoaded) {
+    } else if (loading) {
         return <div>Загрузка...</div>;
     } else {
         return (
-            // <ul>
-            //     {items.map(item => (
-            //         <li key={item.ISO2}>
-            //             {item.ISO2} {item.Country}
-            //         </li>
-            //     ))}
-            // </ul>
-
-            <TableContainer component={Paper}>
-                <Table sx={{ minWidth: 650 }} aria-label="simple table">
-                    <TableHead>
-                        <TableRow>
-                            <TableCell>№</TableCell>
-                            <TableCell>Country</TableCell>
-                            <TableCell>Total Confirmed</TableCell>
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        {items.map((items) => (
-                            <TableRow
-                                key={items.ID}
-                                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                            >
-                                <TableCell component="th" scope="row">
-                                    {items.Number}
-                                </TableCell>
-                                <TableCell component="th" scope="row">
-                                    {items.Country}
-                                </TableCell>
-                                <TableCell align="right">{items.TotalConfirmed}</TableCell>
+            <div>
+                <SearchInput value={searchValue} setValue={setSearchValue} />
+                <TableContainer component={Paper}>
+                    <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                        <TableHead>
+                            <TableRow>
+                                <TableCell>№</TableCell>
+                                <TableCell>Country</TableCell>
+                                <TableCell>Total Confirmed</TableCell>
                             </TableRow>
-                        ))}
-                    </TableBody>
-                </Table>
-            </TableContainer>
+                        </TableHead>
+                        <TableBody>
+                            {countries.filter(searchFilter).map((items) => (
+                                <TableRow
+                                    key={items.ID}
+                                    sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                                >
+                                    <TableCell component="th" scope="row">
+                                        {items.Number}
+                                    </TableCell>
+                                    <TableCell component="th" scope="row">
+                                        {items.Country}
+                                    </TableCell>
+                                    <TableCell align="right">{items.TotalConfirmed}</TableCell>
+                                </TableRow>
+                            ))}
+                        </TableBody>
+                    </Table>
+                </TableContainer>
+            </div>
         );
     }
 }
 
-export default MyComponent;
+export default App;
