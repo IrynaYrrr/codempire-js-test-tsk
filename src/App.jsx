@@ -15,23 +15,25 @@ function MyComponent() {
     const [items, setItems] = useState([]);
 
     useEffect(() => {
-        fetch('https://api.covid19api.com/countries')
+        fetch('https://api.covid19api.com/summary')
             .then(res => res.json())
             .then(
                 (result) => {
                     setIsLoaded(true);
+                    console.log(result)
+                    const countries = result.Countries;
 
-                    for (let i = 0; i < result.length;i++) {
-                        result[i].number = i+1;
+                    for (let i = 0; i < countries.length;i++) {
+                        countries[i].Number = i + 1;
                     }
 
-                    setItems(result);
-                },
-                (error) => {
-                    setIsLoaded(true);
-                    setError(error);
+                    setItems(countries);
                 }
             )
+            .catch((error) => {
+                setIsLoaded(true);
+                setError(error);
+            })
     }, [])
 
     if (error) {
@@ -60,16 +62,16 @@ function MyComponent() {
                     <TableBody>
                         {items.map((items) => (
                             <TableRow
-                                key={items.ISO2}
+                                key={items.ID}
                                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                             >
                                 <TableCell component="th" scope="row">
-                                    {items.number}
+                                    {items.Number}
                                 </TableCell>
                                 <TableCell component="th" scope="row">
                                     {items.Country}
                                 </TableCell>
-                                <TableCell align="right">{items.ISO2}</TableCell>
+                                <TableCell align="right">{items.TotalConfirmed}</TableCell>
                             </TableRow>
                         ))}
                     </TableBody>
