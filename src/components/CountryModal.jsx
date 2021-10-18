@@ -18,7 +18,7 @@ const CountryModal = (props) => {
     const {country, open, closeModal} = props;
 
     return (
-        <div>
+        <>
             <Modal
                 isOpen={open}
                 onRequestClose={closeModal}
@@ -30,7 +30,7 @@ const CountryModal = (props) => {
                 <div>TotalRecovered {country.TotalRecovered}</div>
                 <button onClick={closeModal}>OK</button>
             </Modal>
-        </div>
+        </>
     );
 }
 

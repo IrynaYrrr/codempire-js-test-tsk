@@ -1,4 +1,3 @@
-import '../App.css';
 import { useState } from 'react';
 import CountryModal from './CountryModal';
 
@@ -18,12 +17,14 @@ const CountryItem = (props) => {
     }
 
     return (
-        <div className="main" onClick={openModal}>
-            <div className="flex"> {country.Number}</div>
-            <div className="flex">{country.Country}</div>
-            <div className="flex">{country.TotalConfirmed}</div>
+        <>
+            <tr onClick={openModal}>
+                <td className="first left">{country.Number}</td>
+                <td className="border spacer">{country.Country}</td>
+                <td className="border right">{country.TotalConfirmed}</td>
+            </tr>
             <CountryModal country={country} open={modalOpen} closeModal={closeModal} />
-        </div>
+        </>
     );
 }
 
