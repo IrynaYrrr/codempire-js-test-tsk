@@ -16,14 +16,80 @@ const App = () => {
     const searchFilter = (c) =>
         c.Country.toUpperCase().indexOf(searchValue.toUpperCase()) === 0;
 
+    const getSearchDirection = (cl) => {
+        let direction = '';
+
+        if (cl.contains('asc')) {
+            cl.remove('asc');
+            cl.add('desc');
+            direction = 'desc';
+        } else {
+            cl.remove('desc');
+            cl.add('asc');
+            direction = 'asc';
+        }
+
+        console.log(direction)
+
+        return direction;
+    };
+
+    const getNumberSortFn = (cl, direction) => {
+        if (direction === 'asc') {
+            return (a, b) => {
+                return a.Number - b.Number;
+            }
+        }
+
+        return (a, b) => {
+            return b.Number - a.Number;
+        };
+    };
+
+    const getCountrySortFn = (cl, direction) => {
+        if (direction === 'asc') {
+            return (a, b) => {
+                if (a.Country < b.Country)
+                    return -1;
+                if (a.Country > b.Country)
+                    return 1;
+                return 0;
+            }
+        }
+
+        return (a, b) => {
+            if (a.Country < b.Country)
+                return 1;
+            if (a.Country > b.Country)
+                return -1;
+            return 0;
+        }
+    };
+
+    const getTotalConfirmedSortFn = (cl, direction) => {
+        if (direction === 'asc') {
+            return (a, b) => {
+                return a.TotalConfirmed - b.TotalConfirmed;
+            }
+        }
+
+        return (a, b) => {
+            return b.TotalConfirmed - a.TotalConfirmed;
+        };
+    };
 
     const sort = (e) => {
-        console.log(e)
-        setSortFn(() => (a, b) => {
-            return a.TotalConfirmed - b.TotalConfirmed;
-        })
-        e.target.classList.add('article')
-    }
+        console.log(e.target.classList);
+        const cl = e.target.classList;
+        const direction = getSearchDirection(cl);
+        if (cl.contains('number')) {
+            setSortFn(() => getNumberSortFn(cl, direction));
+        } else if (cl.contains('country')) {
+            setSortFn(() => getCountrySortFn(cl, direction));
+        } else if (cl.contains('totalconfirmed')) {
+            setSortFn(() => getTotalConfirmedSortFn(cl, direction));
+        }
+    };
 
     if (error) {
         return <div>Ошибка: {error.message}</div>;
@@ -67,9 +133,10 @@ const App = () => {
                     <table className="main_table">
                         <thead className="thead">
                         <tr className="header_table">
-                            <th className="first left_header">№</th>
-                            <th className="border_header spacer_header">Country</th>
-                            <th className="border_header right_header">Total Confirmed</th>
+                            <th className="first left_header number" onClick={sort}>№</th>
+                            <th className="border_header spacer_header country" onClick={sort}>Country</th>
+                            <th className="border_header right_header totalconfirmed" onClick={sort}>Total Confirmed
+                            </th>
                         </tr>
                         </thead>
                         <tbody className="tbody">
