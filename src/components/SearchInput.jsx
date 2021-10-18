@@ -1,4 +1,5 @@
 const SearchInput = (props) => {
+
 const {value, setValue} = props;
 
     const onChange = (e) => {

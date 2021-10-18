@@ -13,12 +13,24 @@ import SearchInput from './components/SearchInput';
 import CountryModal from './components/CountryModal';
 import CountryItem from './components/CountryItem';
 
-const App =()=> {
+const App = () => {
     const [countries, loading, error] = useLoadCountries();
     const [searchValue, setSearchValue] = useState('');
+    const [sortFn, setSortFn] = useState();
+
+    console.log(sortFn);
 
     const searchFilter = (c) =>
         c.Country.toUpperCase().indexOf(searchValue.toUpperCase()) === 0;
+
+
+    const sort = (e) => {
+        console.log(e)
+        setSortFn(() => (a, b) => {
+            return a.TotalConfirmed - b.TotalConfirmed;
+        })
+        e.target.classList.add('article')
+    }
 
     if (error) {
         return <div>Ошибка: {error.message}</div>;
@@ -32,10 +44,10 @@ const App =()=> {
                 <div className="main">
                     <div className="flex">№</div>
                     <div className="flex">Country</div>
-                    <div className="flex">Total Confirmed</div>
+                    <div className="flex" onClick={sort}>Total Confirmed</div>
                 </div>
-                {countries.filter(searchFilter).map((country) => (
-                   <CountryItem key={country.ID} country={country} />
+                {countries.filter(searchFilter).sort(sortFn).map((country) => (
+                    <CountryItem key={country.ID} country={country} />
                 ))}
             </div>
         );
