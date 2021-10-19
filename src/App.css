@@ -85,6 +85,10 @@ body {
     width: 100%;
 }
 
+.header_table {
+    cursor: pointer;
+}
+
 .left_header {
     padding: 18px 20px;
     color: #FFFFFF;
