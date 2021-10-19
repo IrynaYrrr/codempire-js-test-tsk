@@ -1,4 +1,6 @@
-Codempire task
+https://codempire-test-task.web.app/
+
+Codempire task 
 
 Task: https://codempire-my.sharepoint.com/:w:/g/personal/dima_codempire_team/EZ95RJ7pPtdIv1JBv5tOoC8BlggZ37SjZNF6wSgEuHxzVA
 
@@ -6,4 +8,3 @@ Design: https://www.figma.com/file/dt4MVZmywQbj1Cu4c1G8xK/Codempire-COVID-statis
 
 API: https://documenter.getpostman.com/view/10808728/SzS8rjbc
 
-Demo: 
