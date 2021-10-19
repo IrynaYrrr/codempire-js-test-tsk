@@ -1,5 +1,3 @@
-import * as React from 'react';
-
 const SearchInput = (props) => {
     const { value, setValue } = props;
 
@@ -10,9 +8,9 @@ const SearchInput = (props) => {
     return (
         <div className="input_wrapper">
 
-            <img className="vector_img"
-                 src={`${process.env.PUBLIC_URL}/assets/vector.svg`}
-                 alt="vector" />
+            <img className="search_svg"
+                 src={`${process.env.PUBLIC_URL}/assets/search.svg`}
+                 alt="search" />
 
             <input className="header_search"
                    value={value}
