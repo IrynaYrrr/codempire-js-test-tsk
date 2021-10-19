@@ -72,9 +72,15 @@ const App = () => {
                         </tr>
                         </thead>
                         <tbody className="tbody">
-                        {countries.filter(searchFilter).sort(sortFn).map((country) => (
-                            <CountryItem key={country.ID} country={country} />
-                        ))}
+                        {countries
+                            .filter(searchFilter)
+                            .map((country, i) => {
+                                country.Number = i + 1;
+                                return country;
+                            })
+                            .sort(sortFn)
+                            .map((country) => (<CountryItem key={country.ID} country={country} />))
+                        }
                         </tbody>
                     </table>
                 </div>

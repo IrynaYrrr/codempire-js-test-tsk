@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 
-export default () => {
-
+const useLoadCounties = () => {
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(true);
     const [data, setData] = useState([]);
@@ -12,10 +11,6 @@ export default () => {
             .then((result) => {
                     setLoading(false);
                     const countries = result.Countries;
-
-                    for (let i = 0; i < countries.length; i++) {
-                        countries[i].Number = i + 1;
-                    }
                     setData(countries);
                 }
             )
@@ -27,3 +22,5 @@ export default () => {
 
     return [data, loading, error];
 }
+
+export default useLoadCounties;
