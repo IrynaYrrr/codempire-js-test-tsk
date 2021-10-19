@@ -51,7 +51,7 @@ body {
     position: relative;
 }
 
-.vector_img {
+.search_svg {
     position: absolute;
     top: 15px;
     left: 305px;
@@ -139,6 +139,50 @@ body {
 
 .border {
     border-left: 1px solid #B2B2B2;
+}
+
+.heading_modal {
+    padding-bottom: 10px;
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.common_modal {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.svg {
+    width: 20px;
+    height: 15px;
+    margin-right: 15px;
+}
+
+.button_wrapper {
+    padding-top: 10px;
+    display: flex;
+    justify-content: center;
+}
+
+.button_modal {
+    appearance: none;
+    border: 0;
+    border-radius: 20px;
+    background: #2196F3;
+    color: #fff;
+    padding: 5px 40px;
+    font-size: 16px;
+}
+
+.left_right{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 280px;
+    padding: 10px;
 }
 
 
