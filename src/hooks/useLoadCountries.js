@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import covid19service from '../services/covid19';
 
 const useLoadCounties = () => {
     const [error, setError] = useState(null);
@@ -6,8 +7,7 @@ const useLoadCounties = () => {
     const [data, setData] = useState([]);
 
     useEffect(() => {
-        fetch('https://api.covid19api.com/summary')
-            .then((res) => res.json())
+        covid19service.getSummary()
             .then((result) => {
                     setLoading(false);
                     const countries = result.Countries;
