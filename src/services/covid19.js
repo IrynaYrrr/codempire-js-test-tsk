@@ -1,5 +1,7 @@
+const baseURL = 'https://api.covid19api.com/';
+
 const getSummary = async () => {
-    return fetch('https://api.covid19api.com/summary')
+    return fetch(`${baseURL}summary`)
         .then((res) => res.json());
 };
 
